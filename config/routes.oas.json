@@ -2,16 +2,37 @@
   "openapi": "3.1.0",
   "info": {
     "version": "1.0.0",
-    "title": "My Zuplo API"
+    "title": "Zuplo BFF Sample"
   },
   "paths": {
+    "/app": {
+      "x-zuplo-path": {
+        "pathMode": "open-api"
+      },
+      "get": {
+        "summary": "Fake App",
+        "x-zuplo-route": {
+          "corsPolicy": "none",
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://echo.zuplo.io"
+            }
+          },
+          "policies": {
+            "inbound": []
+          }
+        },
+        "operationId": "ea7b6b85-cf91-42f1-9b0f-070910fdf1d5"
+      }
+    },
     "/auth/callback": {
       "x-zuplo-path": {
         "pathMode": "open-api"
       },
       "get": {
         "summary": "Auth Callback",
-        "description": "Lorem ipsum dolor sit amet, **consectetur adipiscing** elit, sed do `eiusmod tempor` incididunt ut labore et dolore magna aliqua.",
         "x-zuplo-route": {
           "corsPolicy": "none",
           "handler": {
@@ -32,7 +53,6 @@
       },
       "get": {
         "summary": "Auth Login",
-        "description": "Lorem ipsum dolor sit amet, **consectetur adipiscing** elit, sed do `eiusmod tempor` incididunt ut labore et dolore magna aliqua.",
         "x-zuplo-route": {
           "corsPolicy": "none",
           "handler": {
@@ -53,7 +73,6 @@
       },
       "get": {
         "summary": "Auth Logout",
-        "description": "Lorem ipsum dolor sit amet, **consectetur adipiscing** elit, sed do `eiusmod tempor` incididunt ut labore et dolore magna aliqua.",
         "x-zuplo-route": {
           "corsPolicy": "none",
           "handler": {
@@ -74,7 +93,6 @@
       },
       "get": {
         "summary": "BFF Token",
-        "description": "Lorem ipsum dolor sit amet, **consectetur adipiscing** elit, sed do `eiusmod tempor` incididunt ut labore et dolore magna aliqua.",
         "x-zuplo-route": {
           "corsPolicy": "none",
           "handler": {
@@ -95,7 +113,6 @@
       },
       "get": {
         "summary": "BFF Session Info",
-        "description": "Lorem ipsum dolor sit amet, **consectetur adipiscing** elit, sed do `eiusmod tempor` incididunt ut labore et dolore magna aliqua.",
         "x-zuplo-route": {
           "corsPolicy": "none",
           "handler": {

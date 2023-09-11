@@ -6,6 +6,7 @@ const ISSUER_URL = "https://my-account.us.auth0.com";
 const TOKEN_URL = `${ISSUER_URL}/oauth/token`;
 const AUTHORIZATION_URL = `${ISSUER_URL}/authorize`;
 const USERINFO_URL = `${ISSUER_URL}/userinfo`;
+const SCOPE = "openid profile email"
 
 
 // App Config
@@ -45,7 +46,7 @@ interface TokenResponseError {
  * OAuth user info response
  */
 interface UserInfoResponse {
-  [key: string]: string | boolean | number;
+  [key: string]: string | boolean | number | undefined;
   sub: string;
   email: string;
   email_verified: boolean;
@@ -131,7 +132,7 @@ export async function bffSessionInfo(
  */
 export async function login(request: ZuploRequest, context: ZuploContext) {
   const authUrl = new URL(AUTHORIZATION_URL);
-  authUrl.searchParams.set("client_id", environment.CLIENT_ID);
+  authUrl.searchParams.set("client_id", environment.CLIENT_ID!);
   authUrl.searchParams.set("scope", SCOPE);
   authUrl.searchParams.set("response_type", "code");
   authUrl.searchParams.set(
@@ -180,8 +181,8 @@ export async function authCallback(
 
   const data = {
     grant_type: "authorization_code",
-    client_id: environment.CLIENT_ID,
-    client_secret: environment.CLIENT_SECRET,
+    client_id: environment.CLIENT_ID!,
+    client_secret: environment.CLIENT_SECRET!,
     code,
     redirect_uri: new URL("/auth/callback", request.url).toString(),
   };
@@ -245,7 +246,7 @@ function redirectWithCookieResponse(sessionId: string, maxAge: number) {
  * Gets the session ID from the cookie
  */
 function getSessionId(request: Request) {
-  const cookie = parse(request.headers.get("cookie"));
+  const cookie = parse(request.headers.get("cookie")!);
 
   const sessionId = cookie[COOKIE_NAME];
   if (!sessionId) {
@@ -296,7 +297,7 @@ async function getSessionState(request: Request): Promise<SessionState> {
       // If we have a refresh token, we can renew the session
       const data = {
         grant_type: "refresh_token",
-        client_id: environment.CLIENT_ID,
+        client_id: environment.CLIENT_ID!,
         refresh_token: sessionState.refresh_token,
       };
       const tokenResponse = await fetchToken(data);
@@ -325,7 +326,7 @@ async function storageApi(pathname: string, body?: any) {
   const response = await fetch(new URL(pathname, environment.UPSTASH_URL).toString(), {
     method: "POST",
     headers: {
-      authorization: environment.UPSTASH_TOKEN,
+      authorization: environment.UPSTASH_TOKEN!,
     },
     body: body ? JSON.stringify(body) : undefined,
   });
