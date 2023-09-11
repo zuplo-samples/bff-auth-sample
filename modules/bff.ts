@@ -2,7 +2,7 @@ import { HttpProblems, ZuploContext, ZuploRequest, environment } from "@zuplo/ru
 import { parse } from "cookie";
 
 // Identity Provider Config
-const ISSUER_URL = "https://my-account.us.auth0.com";
+const ISSUER_URL = `https://${environment.AUTH0_URL}`;
 const TOKEN_URL = `${ISSUER_URL}/oauth/token`;
 const AUTHORIZATION_URL = `${ISSUER_URL}/authorize`;
 const USERINFO_URL = `${ISSUER_URL}/userinfo`;
