@@ -2,7 +2,7 @@ import { HttpProblems, ZuploContext, ZuploRequest, environment } from "@zuplo/ru
 import { parse } from "cookie";
 
 // Identity Provider Config
-const ISSUER_URL = "https://ntotten-test.us.auth0.com";
+const ISSUER_URL = "https://my-account.us.auth0.com";
 const TOKEN_URL = `${ISSUER_URL}/oauth/token`;
 const AUTHORIZATION_URL = `${ISSUER_URL}/authorize`;
 const USERINFO_URL = `${ISSUER_URL}/userinfo`;
@@ -10,7 +10,7 @@ const USERINFO_URL = `${ISSUER_URL}/userinfo`;
 
 // App Config
 const APP_URL = "/app";
-const COOKIE_NAME = "zp-session-id";
+const COOKIE_NAME = "app-session";
 
 // Cache expire offset
 const EXPIRE_OFFSET = 180;
